@@ -1,0 +1,19 @@
+.booking {
+  &__message {
+    padding: 0.5em 1em;
+    margin-bottom: 1em;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 0.5em;
+  }
+}
+
+.booking-dates {
+  margin-bottom: 1em;
+}
+.card__link {
+  padding: 10px 12px;
+  color: white;
+  background-color: rgb(76, 146, 252);
+  transition: 10s ease-in-out;
+  cursor: pointer;
+}

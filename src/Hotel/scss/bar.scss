@@ -1,0 +1,55 @@
+@import "../../scss/vars.scss";
+
+.search-bar {
+  background-color: $primary-color;
+  border-radius: 0.4em;
+  box-shadow: 0 2px 3px rgb(34, 25, 25);
+  display: flex;
+  padding: 0.2em;
+
+  &__input {
+    border: none;
+    border-bottom-left-radius: 0.2em;
+    border-top-left-radius: 0.2em;
+    flex: 1 1 auto;
+    font-size: 1em;
+    line-height: 1.5;
+    padding: 0.5em 0.75em;
+    width: 70%;
+  }
+
+  &__btn {
+    background-color: #2984fc;
+    border: none;
+    border-bottom-right-radius: 0.2em;
+    border-top-right-radius: 0.2em;
+    color: $primary-color;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-size: 1em;
+    width: 10%;
+
+    &:hover,
+    &:focus {
+      background-color: #aadcff;
+    }
+  }
+}
+
+@media (min-width: $sm-width) {
+  .search-bar {
+    border-radius: 0.3em;
+    padding: 0em;
+    background-color: black;
+
+    &__input {
+      font-size: 1.25em;
+      padding: 0.5em 1em;
+    }
+
+    &__btn {
+      font-size: 1.25em;
+    }
+  }
+}

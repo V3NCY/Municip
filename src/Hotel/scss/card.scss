@@ -1,0 +1,78 @@
+@import "../../scss/vars.scss";
+
+.card {
+  border-radius: 0.4em;
+  box-shadow: 0 1px 3px rgba(34, 25, 25, 0.2);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75em;
+  padding: 0.5em;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 2px 3px rgba(34, 25, 25, 0.3);
+  }
+
+  &__name {
+    display: block;
+    font-size: 1.25em;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    text-decoration: none;
+  }
+
+  &__description {
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  &__link {
+    background-color: #fff;
+    color: $primary-color;
+    cursor: pointer;
+    border: 1px solid $primary-color;
+    border-radius: 0.5em;
+    display: block;
+    font-size: 16px;
+    padding: 0.5em 1.5em;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      background-color: $primary-color;
+      color: #fff;
+    }
+  }
+}
+
+.card-content {
+  flex-grow: 1;
+}
+
+@media (min-width: $sm-width) {
+  .card {
+    flex-direction: row;
+    border-radius: 0.5em;
+    margin-bottom: 1em;
+    padding: 1em;
+
+    &__name {
+      font-size: 1.5em;
+      font-weight: 300;
+    }
+
+    &__description {
+      margin-bottom: 1.5em;
+    }
+
+    &__link {
+      display: inline-block;
+      float: right;
+      position: absolute;
+      right: 40px;
+      bottom: 10px;
+    }
+  }
+}
