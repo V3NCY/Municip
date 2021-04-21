@@ -14,14 +14,17 @@ import * as serviceWorker from "./serviceWorker";
 import booking from "./redux/reducers";
 import reportWebVitals from "./reportWebVitals";
 
-const store = createStore(booking, applyMiddleware(thunk), composeWithDevTools());
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: 'https://localhost:4000/graphql',
+  // uri: 'https://graphql-server-st.herokuapp.com/graphql',
   credentials: 'same-origin'
 });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
+
   return {
     headers: {
       ...headers,
@@ -30,11 +33,24 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+}
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     addTypename: false
-  })
+  }),
+  defaultOptions
 });
 
 ReactDOM.render(

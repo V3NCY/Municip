@@ -94,7 +94,10 @@ const routes = [
 const getRoutes = () => {
   const routeComponents = routes.map((route, index) => {
     return (
-      <Route key={index} exact={route.exact} path={route.path}>
+      <Route
+        key={index}
+        exact={route.exact}
+        path={route.path}>
         {route.main}
       </Route>
     );

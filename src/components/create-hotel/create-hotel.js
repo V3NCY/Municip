@@ -2,11 +2,12 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { gql, useMutation } from '@apollo/client';
 import { useState } from "react";
 const CREATE_HOTEL = gql`
-  mutation CreateHotel($data: CreateHotelInput!) {
-    createHotel(data: $data) {
+  mutation CreateHotel($input: CreateHotelInput!) {
+    createHotel(input: $input) {
       _id
       title
       description
+      extras
       rating
     }
   }
@@ -15,21 +16,23 @@ function CreateHotel(props) {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [extras, setExtras] = useState('');
     const [rating, setRating] = useState('');
 
-    const [createHotel, { data }] = useMutation(CREATE_HOTEL);
+    const [createHotel, { input }] = useMutation(CREATE_HOTEL);
 
     const onCreateHotel = () => {
-        const hotelData = {
+        const hotelInput = {
             variables: {
                 data: {
                     title,
                     description,
+                    extras,
                     rating: Number(rating),
                 }
             }
         }
-        createHotel(hotelData).then(response => {
+        createHotel(hotelInput).then(response => {
             console.log(response);
         });
         resetState();
@@ -37,6 +40,7 @@ function CreateHotel(props) {
     const resetState = () => {
         setTitle('');
         setDescription('');
+        setExtras('');
         setRating('');
     }
 
@@ -61,7 +65,7 @@ function CreateHotel(props) {
                     id="title"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
-                    placeholder="Име на хотел..." />
+                    placeholder="Име на хотел" />
             </FormGroup>
             <FormGroup>
                 <Label for="description">Описание</Label>
@@ -71,7 +75,17 @@ function CreateHotel(props) {
                     id="description"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
-                    placeholder="Описание..." />
+                    placeholder="Описание" />
+            </FormGroup>
+            <FormGroup>
+                <Label for="description">Екстри</Label>
+                <Input
+                    type="text"
+                    name="extras"
+                    id="extras"
+                    value={extras}
+                    onChange={e => setExtras(e.target.value)}
+                    placeholder="Екстри" />
             </FormGroup>
             <FormGroup>
                 <Label for="rating">Рейтинг</Label>
@@ -85,7 +99,7 @@ function CreateHotel(props) {
                     {getOptions()}
                 </Input>
             </FormGroup>
-            <Button type="submit" color="primary">Добави хотел</Button>
+            <Button type="submit">Добави хотел</Button>
         </Form>
     </>
 }
