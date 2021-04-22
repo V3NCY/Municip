@@ -1,11 +1,14 @@
 export default `
+
     input UserInput {
         email: String!
         password: String!
         hotels: [String]
         firstName: String!
         lastName: String!
+        roles: [String]
     }
+
     type User {
         _id: String!
         email: String!
@@ -13,17 +16,21 @@ export default `
         firstName: String!
         lastName: String!
         hotels: [Hotel]
+        roles: [String]
     }
+
     type Query {
-        user(_id: String!): User
+        user (_id: String!): User
         users: [User]
         currentUser: User
     }
+    
     type Mutation {
-        createUser(data: UserInput!): User
-        editUser(_id: String!, data: UserInput!): User
-        deleteUser(_id: String!): User
+        createUser (input: UserInput!): User
+        editUser (_id: String!, input: UserInput!): User 
+        deleteUser (_id: String!): User
         login(email: String!, password: String!): String
         logout: User
     }
+
 `

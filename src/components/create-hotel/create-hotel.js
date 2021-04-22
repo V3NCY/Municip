@@ -24,7 +24,7 @@ function CreateHotel(props) {
     const onCreateHotel = () => {
         const hotelInput = {
             variables: {
-                data: {
+                input: {
                     title,
                     description,
                     extras,
@@ -46,7 +46,7 @@ function CreateHotel(props) {
 
     const getOptions = () => {
         let options = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 1; i < 7; i++) {
             options.push(<option value={i} key={i}>{i}</option>)
         }
         return options;
@@ -65,7 +65,7 @@ function CreateHotel(props) {
                     id="title"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
-                    placeholder="Име на хотел" />
+                    placeholder="Име на хотел..." />
             </FormGroup>
             <FormGroup>
                 <Label for="description">Описание</Label>
@@ -75,7 +75,7 @@ function CreateHotel(props) {
                     id="description"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
-                    placeholder="Описание" />
+                    placeholder="Описание..." />
             </FormGroup>
             <FormGroup>
                 <Label for="description">Екстри</Label>
@@ -85,7 +85,7 @@ function CreateHotel(props) {
                     id="extras"
                     value={extras}
                     onChange={e => setExtras(e.target.value)}
-                    placeholder="Екстри" />
+                    placeholder="Описание на екстрите..." />
             </FormGroup>
             <FormGroup>
                 <Label for="rating">Рейтинг</Label>
@@ -99,7 +99,7 @@ function CreateHotel(props) {
                     {getOptions()}
                 </Input>
             </FormGroup>
-            <Button type="submit">Добави хотел</Button>
+            <Button type="submit" color="primary">Добави хотел</Button>
         </Form>
     </>
 }

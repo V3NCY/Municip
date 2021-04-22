@@ -1,12 +1,13 @@
-import User from "../../models/User.js";
-import bcryptjs from "bcryptjs";
+import User from "../../model/User.js";
+import { UserInputError } from "apollo-server";
 import jwt from "jsonwebtoken";
+import bcryptjs from "bcryptjs";
 import validator from "validator";
 import dotenv from "dotenv";
-import { UserInputError } from "apollo-server";
 dotenv.config();
 
 export default {
+
     Query: {
         user: async (root, { _id }) => {
             const user = await User.findById(_id).populate("hotels");
@@ -17,80 +18,85 @@ export default {
             return users;
         },
         currentUser: async (root, args, context) => {
+            console.log('==>', context.user)
             return context.user;
         },
     },
     Mutation: {
         createUser: async (root, args) => {
-            const userData = args.data;
-            if (!validator.isEmail(userData.email)) {
-                throw new UserInputError(`Email is not valid: ${userData.email}`, {
-                    field: "email",
-                    value: userData.email,
-                    constraint: "isEmail",
-                })
+
+            const userInput = args.input;
+            if (!validator.isEmail(userInput.email)) {
+                throw UserInputError(`This ${userInput.email} email is not valid!`,
+                    {
+                        field: "email",
+                        value: userInput.email,
+                        constraint: "isEmail",
+                    })
             }
 
-            if (!validator.isLength(userData.password, { min: 6, max: 50 })) {
-                throw new UserInputError(`Password has to be between 6 and 50 symbols`, {
-                    field: "password",
-                    value: userData.password,
-                    constraint: "isLength",
-                })
+            if (!validator.isLength(userInput.password, { min: 4, max: 50 })) {
+                throw UserInputError(`Password is not valid... It has to be between 4 and 50 symbols... !`,
+                    {
+                        field: "password",
+                        value: userInput.password,
+                        constraint: "isLength",
+                    })
             }
-
-            userData.password = await bcryptjs.hash(userData.password, 10);
-            const newUser = new User(userData);
+            userInput.password = await bcryptjs.hash(userInput.password, 10)
+            const newUser = new User(userInput)
             await newUser.save();
             return newUser;
         },
-        editUser: async (root, { _id, data }) => {
-            const user = await User.findByIdAndUpdate(_id,
-                { $set: data },
+        editUser: async (root, { _id, input }) => {
+            const user = await User.findByIdAndUpdate(
+                _id,
+                { $set: input },
                 {
                     runValidators: true,
-                    new: true,
-                }).populate("hotels")
+                    new: true
+                }).populate("hotels");
             return user;
         },
         deleteUser: async (root, { _id }) => {
-            const user = User.findOneAndDelete(_id).populate("hotels");
+            const user = User.findOneAndDelete(_id);
             return user;
         },
         login: async (root, { email, password }) => {
+
             const matchedUser = await User.findOne({ email });
             if (!matchedUser) {
-                throw new UserInputError(`Cannot find user with this email, please use another or try again...: ${email}`, {
+                throw new Error(`This e-mail: ${email} is not recognized, please try again...`),
+                {
                     field: "email",
                     value: email,
                     constraint: "emailDoesNotExist",
-                })
+                }
             }
 
             const validPassword = await bcryptjs.compare(password, matchedUser.password);
             if (!validPassword) {
-                throw new UserInputError(`Password is incorrect, try again...`, {
+                throw new Error(`This password does not match the email: ${email}, please try again...`),
+                {
                     field: "password",
                     value: "",
                     constraint: "passwordIncorrect",
-                })
+                }
             }
 
-            const privateKey = process.env.JSONWEBTOKEN_PRIVATE_KEY;
+            const pk = process.env.JSONWEBTOKEN_SECRET_KEY;
             const token = jwt.sign({
                 _id: matchedUser._id,
                 email: matchedUser.email,
-            }, privateKey, {
-                expiresIn: "1d"
+
+            }, pk, {
+                expiresIn: '24h'
             });
 
             return token;
         },
         logout: async (root, args, context) => {
-
             return context.user;
         }
     }
-
-
 }

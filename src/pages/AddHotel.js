@@ -10,15 +10,15 @@ const GET_HOTELS = gql`
   }
 `;
 
-function Hotels(props) {
+function AddHotel(props) {
 
-    const { loading, error, data } = useQuery(GET_HOTELS);
+    const { loading, error, input } = useQuery(GET_HOTELS);
 
     const getHotels = () => {
-        if (!data) {
+        if (!input) {
             return null;
         }
-        const hotelsList = data.hotels.map(hotel => {
+        const hotelsList = input.hotels.map(hotel => {
             return <div
                 key={hotel._id}
             >{hotel.title}</div>
@@ -30,7 +30,7 @@ function Hotels(props) {
         <div className="container">
             <div className="row">
                 <div className="col-md-4">
-                    <CreateHotel />
+                    <CreateHotel/>
                 </div>
                 <div className="col">
                     <div>Списък с хотели:</div>
@@ -40,4 +40,4 @@ function Hotels(props) {
         </div>
     </>
 }
-export default Hotels;
+export default AddHotel;

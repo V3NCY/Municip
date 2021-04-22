@@ -1,43 +1,11 @@
-import { useQuery, gql } from '@apollo/client';
-import CreateHotel from "../components/create-hotel/create-hotel";
+import React from "react";
+import { connect } from "react-redux";
+import { setHotels } from "../redux/actions";
 
-const GET_HOTELS = gql`
-  query getHotels {
-    hotels {
-      _id
-      title
-    }
-  }
-`;
+function Hotels({ dispatch }) {
+  dispatch(setHotels());
 
-function Hotels(props) {
-
-  const { loading, error, input } = useQuery(GET_HOTELS);
-
-  const getHotels = () => {
-    if (!input) {
-      return null;
-    }
-    const hotelsList = input.hotels.map(hotel => {
-      return <div
-        key={hotel._id}
-      >{hotel.title}</div>
-    })
-    return hotelsList;
-  }
-
-  return <>
-    <div className="container">
-      <div className="row">
-        <div className="col-md-4">
-          <CreateHotel />
-        </div>
-        <div className="col">
-          <div>Списък с хотели:</div>
-          {getHotels()}
-        </div>
-      </div>
-    </div>
-  </>
+  return <div className="hotels"></div>;
 }
-export default Hotels;
+
+export default connect()(Hotels);

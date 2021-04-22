@@ -50,7 +50,7 @@ const UserMenu = (props) => {
     const [login, { input }] = useMutation(LOGIN);
     const [logout] = useMutation(LOGOUT);
 
-    const [getCurrentUser, queryData] = useLazyQuery(GET_CURRENT_USER);
+    const [getCurrentUser, queryInput] = useLazyQuery(GET_CURRENT_USER);
 
     const onLogin = () => {
         const loginInput = {
@@ -61,7 +61,7 @@ const UserMenu = (props) => {
         }
 
         login(loginInput).then(response => {
-            //TODO maybe we can use a cookie
+
             localStorage.setItem('token', response.input.login);
             getCurrentUser();
             setModal(false);
@@ -78,16 +78,16 @@ const UserMenu = (props) => {
         getCurrentUser();
     }
     const getUserMenu = () => {
-        if (queryData.loading || !queryData.called) {
+        if (queryInput.loading || !queryInput.called) {
             return null;
         }
-        if (queryData.input && queryData.input.currentUser) {
+        if (queryInput.input && queryInput.input.currentUser) {
             return <div className="d-flex align-items-center">
                 <FontAwesomeIcon icon={faUser} />
-                <div className="mx-2">{queryData.input.currentUser.email}</div>
+                <div className="mx-2">{queryInput.input.currentUser.email}</div>
                 <Button size="sm" onClick={() => {
                     onLogout();
-                }}>Logout</Button>
+                }} color="danger">Logout</Button>
             </div>
 
 
@@ -95,7 +95,7 @@ const UserMenu = (props) => {
 
         return <Button onClick={() => {
             setModal(true)
-        }} color="success" size="sm">Login</Button>
+        }} className="mr-2" size="md" color="primary">Login</Button>
     }
 
 
@@ -103,21 +103,21 @@ const UserMenu = (props) => {
         <>
             { getUserMenu()}
             <Modal isOpen={modal} toggle={toggleModal}>
-                <ModalHeader toggle={toggleModal}>Login</ModalHeader>
+                <ModalHeader toggle={toggleModal}>Вписване</ModalHeader>
                 <ModalBody>
                     <Form onSubmit={e => {
                         e.preventDefault();
                         onLogin()
                     }}>
                         <FormGroup>
-                            <Label for="email">Е-мейл:</Label>
+                            <Label for="email">И-мейл:</Label>
                             <Input
                                 type="email"
                                 name="email"
                                 id="email"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
-                                placeholder="Email" />
+                                placeholder="Your e-mail..." />
                         </FormGroup>
                         <FormGroup>
                             <Label for="password">Парола:</Label>
@@ -127,9 +127,9 @@ const UserMenu = (props) => {
                                 id="password"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
-                                placeholder="Password" />
+                                placeholder="Your password..." />
                         </FormGroup>
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" color="primary">Login</Button>
                     </Form>
                 </ModalBody>
             </Modal>
