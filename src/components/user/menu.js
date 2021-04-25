@@ -38,7 +38,7 @@ query getCurrentUser {
 }
 `;
 
-const UserMenu = (props) => {
+const Menu = (props) => {
 
     useEffect(() => {
         getCurrentUser();
@@ -61,7 +61,6 @@ const UserMenu = (props) => {
         }
 
         login(loginInput).then(response => {
-
             localStorage.setItem('token', response.input.login);
             getCurrentUser();
             setModal(false);
@@ -77,7 +76,7 @@ const UserMenu = (props) => {
         localStorage.setItem('token', "");
         getCurrentUser();
     }
-    const getUserMenu = () => {
+    const getMenu = () => {
         if (queryInput.loading || !queryInput.called) {
             return null;
         }
@@ -101,7 +100,7 @@ const UserMenu = (props) => {
 
     return (
         <>
-            { getUserMenu()}
+            { getMenu()}
             <Modal isOpen={modal} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Вписване</ModalHeader>
                 <ModalBody>
@@ -137,4 +136,4 @@ const UserMenu = (props) => {
     );
 }
 
-export default UserMenu;
+export default Menu;

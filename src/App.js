@@ -97,12 +97,13 @@ const getRoutes = () => {
       <Route
         key={index}
         exact={route.exact}
-        path={route.path}>
+        path={route.path}
+      >
         {route.main}
       </Route>
     );
   });
-  return routeComponents;
+  return routeComponents
 };
 
 function App() {

@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import "./scss/styles.scss";
 import thunk from "redux-thunk";
 import rootReducer from "./redux/reducers";
@@ -11,13 +10,14 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import booking from "./redux/reducers";
 import reportWebVitals from "./reportWebVitals";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+
 const httpLink = createHttpLink({
-  uri: 'https://graphql-server-st.herokuapp.com/graphql',
+  // uri: 'http://localhost:3001/graphql',
+  uri: 'https://graphql-master-server.herokuapp.com/',
   credentials: 'same-origin'
 });
 
@@ -49,7 +49,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache({
     addTypename: false
   }),
-  defaultOptions
+  defaultOptions,
 });
 
 ReactDOM.render(
