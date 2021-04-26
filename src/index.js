@@ -16,7 +16,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
 const httpLink = createHttpLink({
-  // uri: 'http://localhost:3001/graphql',
+  // uri: 'http://localhost:4000/graphql',
   uri: 'https://graphql-master-server.herokuapp.com/',
   credentials: 'same-origin'
 });
