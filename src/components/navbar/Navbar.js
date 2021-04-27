@@ -8,19 +8,12 @@ import {
   NavItem,
   NavLink,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
   Form,
-  FormGroup,
-  Label,
-  Input,
 
 } from 'reactstrap';
 import { FormControl } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../mountain.svg';
-import { useMutation } from '@apollo/client';
 import UserMenu from "../user/menu";
 import { gql } from '@apollo/client';
 
@@ -84,9 +77,11 @@ const Example = (props) => {
               Контакти
            </NavLink>
           </NavItem>
-          <NavLink tag={Link} to="/addhotel">
-            Добави Хотел
+          <NavItem>
+            <NavLink tag={Link} to="/addhotel">
+              Добави Хотел
            </NavLink>
+          </NavItem>
         </Nav>
         <UserMenu />
         <Form inline>
