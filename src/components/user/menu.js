@@ -73,7 +73,7 @@ const Menu = (props) => {
 
     const onLogout = () => {
         logout();
-        localStorage.setItem('token', "");
+        localStorage.setItem('token', " ");
         getCurrentUser();
     }
     const getMenu = () => {

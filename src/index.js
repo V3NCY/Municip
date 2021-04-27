@@ -14,10 +14,9 @@ import reportWebVitals from "./reportWebVitals";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-
 const httpLink = createHttpLink({
-  // uri: 'http://localhost:4000/graphql',
-  uri: 'https://graphql-master-server.herokuapp.com/',
+  // uri: "http://localhost:4000/graphql",
+  uri: 'https://graphql-master-server.herokuapp.com/graphql',
   credentials: 'same-origin'
 });
 

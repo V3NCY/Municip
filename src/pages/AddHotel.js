@@ -12,7 +12,7 @@ const GET_HOTELS = gql`
 
 function AddHotel(props) {
 
-    const { loading, error, input } = useQuery(GET_HOTELS);
+    const { input } = useQuery(GET_HOTELS);
 
     const getHotels = () => {
         if (!input) {
@@ -30,7 +30,7 @@ function AddHotel(props) {
         <div className="container">
             <div className="row">
                 <div className="col-md-4">
-                    <CreateHotel/>
+                    <CreateHotel />
                 </div>
                 <div className="col">
                     <div>Списък с хотели:</div>

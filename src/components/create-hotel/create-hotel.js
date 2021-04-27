@@ -75,7 +75,7 @@ function CreateHotel(props) {
                     id="description"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
-                    placeholder="Описание..." />
+                    placeholder="Локация, особености..." />
             </FormGroup>
             <FormGroup>
                 <Label for="description">Екстри</Label>
