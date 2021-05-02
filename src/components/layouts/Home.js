@@ -1,11 +1,13 @@
 import Navbar from "../navbar/Navbar";
 import Footer from "../footer/footer";
+import GoogleMaps from "../maps/index";
 
-function HomeLayout (props) {
-    return <>
-    <Navbar/>
+function HomeLayout(props) {
+  return <>
+    <Navbar />
     {props.children}
-    <Footer/>
+    <GoogleMaps />
+    <Footer />
   </>
 }
 

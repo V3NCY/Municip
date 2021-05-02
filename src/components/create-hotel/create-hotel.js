@@ -2,8 +2,8 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { gql, useMutation } from '@apollo/client';
 import { useState } from "react";
 const CREATE_HOTEL = gql`
-  mutation CreateHotel($input: CreateHotelInput!) {
-    createHotel(input: $input) {
+  mutation CreateHotel($data: CreateHotelInput!) {
+    createHotel(data: $data) {
       _id
       title
       description
@@ -19,12 +19,12 @@ function CreateHotel(props) {
     const [extras, setExtras] = useState('');
     const [rating, setRating] = useState('');
 
-    const [createHotel, { input }] = useMutation(CREATE_HOTEL);
+    const [createHotel, { data }] = useMutation(CREATE_HOTEL);
 
     const onCreateHotel = () => {
         const hotelInput = {
             variables: {
-                input: {
+                data: {
                     title,
                     description,
                     extras,

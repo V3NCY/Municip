@@ -12,13 +12,13 @@ const GET_HOTELS = gql`
 
 function AddHotel(props) {
 
-    const { input } = useQuery(GET_HOTELS);
+    const { data } = useQuery(GET_HOTELS);
 
     const getHotels = () => {
-        if (!input) {
+        if (!data) {
             return null;
         }
-        const hotelsList = input.hotels.map(hotel => {
+        const hotelsList = data.hotels.map(hotel => {
             return <div
                 key={hotel._id}
             >{hotel.title}</div>

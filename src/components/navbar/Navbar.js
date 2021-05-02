@@ -12,22 +12,26 @@ import {
 
 } from 'reactstrap';
 import { FormControl } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../mountain.svg';
 import UserMenu from "../user/menu";
-import { gql } from '@apollo/client';
-
-
-const LOGIN = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password)
-  }
-`;
-
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const currentUser = useSelector(state => state.currentUser);
+
+  const getAdminNavItem = () => {
+    if (!currentUser.roles || !currentUser.roles.includes("ADMIN")) {
+      return null;
+    }
+    return <NavItem>
+      <NavLink tag={Link} to="/admin">
+        Админ
+            </NavLink>
+    </NavItem>
+  }
 
   return (
     <Navbar color="dark" dark expand="md" className="shadow p-1 bg-light">
@@ -82,6 +86,7 @@ const Example = (props) => {
               Добави Хотел
            </NavLink>
           </NavItem>
+          {getAdminNavItem()}
         </Nav>
         <UserMenu />
         <Form inline>

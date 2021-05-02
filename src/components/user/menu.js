@@ -47,7 +47,7 @@ const Menu = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [login, { input }] = useMutation(LOGIN);
+    const [login, { data }] = useMutation(LOGIN);
     const [logout] = useMutation(LOGOUT);
 
     const [getCurrentUser, queryInput] = useLazyQuery(GET_CURRENT_USER);
@@ -61,7 +61,7 @@ const Menu = (props) => {
         }
 
         login(loginInput).then(response => {
-            localStorage.setItem('token', response.input.login);
+            localStorage.setItem('token', response.data.login);
             getCurrentUser();
             setModal(false);
         });
@@ -80,11 +80,11 @@ const Menu = (props) => {
         if (queryInput.loading || !queryInput.called) {
             return null;
         }
-        if (queryInput.input && queryInput.input.currentUser) {
+        if (queryInput.data && queryInput.data.currentUser) {
             return <div className="d-flex align-items-center">
                 <FontAwesomeIcon icon={faUser} />
-                <div className="mx-2">{queryInput.input.currentUser.email}</div>
-                <Button size="sm" onClick={() => {
+                <div className="mx-2">{queryInput.data.currentUser.email}</div>
+                <Button size="md" onClick={() => {
                     onLogout();
                 }} color="danger">Logout</Button>
             </div>

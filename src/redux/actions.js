@@ -25,4 +25,5 @@ export const search = key => {
     type: SEARCH,
     key
   };
+
 };
